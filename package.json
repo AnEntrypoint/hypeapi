@@ -1,0 +1,12 @@
+{
+    "name": "hypeapi",
+    "version": "0.0.1",
+    "scripts": {
+        "start": "node server.js"
+    },
+    "exports": "./index.js",
+    "dependencies": {
+        "express": "^4.18.2",
+        "hyper-ipc-secure": "^1.4.26"
+    }
+}
