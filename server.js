@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express')
 const tasks = require( './tasks.js')
 const run = require( './run.js')
@@ -27,7 +28,7 @@ app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Credentials', true);
     next();
 });
-
+const kp = {publicKey:Buffer.from(process.env.PUBLICKEY, 'hex')}
 app.use('/task', tasks(node, kp))
 app.use('/run', run(node, kp))
 
