@@ -12,6 +12,7 @@ const init = (node)=>{
         try {
             const kp = {publicKey:Buffer.from(req.params.pk, 'hex')};
             const sub = node.getSub(kp, req.params.actionname)
+            console.log(sub.publicKey.toString('hex'))
             const lbkey = await node.lbfind(sub);
             console.log({body, args})
             const output = await node.runKey(Buffer.from(lbkey[0], 'hex'),  body || args);
@@ -30,6 +31,7 @@ const init = (node)=>{
         try {
             const kp = {publicKey:Buffer.from(req.params.pk, 'hex')};
             const sub = node.getSub(kp, req.params.actionname)
+            console.log(sub.publicKey.toString('hex'))
             const lbkey = await node.lbfind(sub);
             const found = JSON.stringify(lbkey);
             console.log({found});
