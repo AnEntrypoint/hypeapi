@@ -1,3 +1,4 @@
+const express = require('express')
 /**
  * Initializes the router for handling tasks requests.
  * @param {Object} node - The node object.
@@ -60,7 +61,7 @@ const init = (node) => {
       const kp = {
         publicKey: Buffer.from(pk, "hex")
       };
-      const lbkey = await node.lbfind(kp, "tasks");
+      const lbkey = await node.lbfind(kp, "task");
       const output = await node.runKey(Buffer.from(lbkey[0], "hex"), {
         name: req.params.actionname,
         pk: req.params.pk,
