@@ -1,14 +1,14 @@
 /**
  * Loads the environment variables and starts the server.
  */
-require("dotenv").config();
+require("dotenv").config()
 
-const express = require("express");
-const tasks = require("./tasks.js");
-const run = require("./call.js");
-const fs = require("fs");
-const node = require("hyper-ipc-secure")();
-
+const express = require("express")
+const tasks = require("./tasks.js")
+const call = require("./call.js")
+const fs = require("fs")
+const node = require("hyper-ipc-secure")()
+const db = require('hypebee')
 /**
  * Creates a folder if it doesn't exist.
  * @param {string} folderPath - The path of the folder.
@@ -16,17 +16,17 @@ const node = require("hyper-ipc-secure")();
 function createFolderIfNotExists(folderPath) {
   if (!fs.existsSync(folderPath)) {
     // If the folder doesn't exist, create it
-    fs.mkdirSync(folderPath);
-    console.log(`Folder "${folderPath}" created.`);
+    fs.mkdirSync(folderPath)
+    console.log(`Folder "${folderPath}" created.`)
   } else {
-    console.log(`Folder "${folderPath}" already exists.`);
+    console.log(`Folder "${folderPath}" already exists.`)
   }
 }
 
-createFolderIfNotExists("saves");
+createFolderIfNotExists("saves")
 
-const app = express();
-const port = process.env.PORT || 3011;
+const app = express()
+const port = process.env.PORT || 3011
 
 app.use(express.json());
 app.use(express.urlencoded({
@@ -34,21 +34,21 @@ app.use(express.urlencoded({
 }));
 
 app.use((function(req, res, next) {
-  res.setHeader("Access-Control-Allow-Origin", "https://svelvet.lan.247420.xyz");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, PATCH, DELETE");
-  res.setHeader("Access-Control-Allow-Headers", "X-Requested-With, content-type");
-  res.setHeader("Access-Control-Allow-Credentials", true);
+  res.setHeader("Access-Control-Allow-Origin", "https://svelvet.lan.247420.xyz")
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, PATCH, DELETE")
+  res.setHeader("Access-Control-Allow-Headers", "X-Requested-With, content-type")
+  res.setHeader("Access-Control-Allow-Credentials", true)
   next();
 }));
 
-app.use("/task", tasks(node));
-app.use("/run", run(node));
+app.use("/task", tasks(node, db))
+app.use("/run", call(node))
 
 app.listen(port, (() => {
-  console.log(`Example app listening on port ${port}`);
-}));
+  console.log(`Example app listening on port ${port}`)
+}))
 app.use(function (err, req, res, next) {
   res
     .status(err.status || 500)
-    .send({ message: err.message, stack: err.stack });
+    .send({ message: err.message, stack: err.stack })
 });
