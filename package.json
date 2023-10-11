@@ -2,12 +2,17 @@
     "name": "hypeapi",
     "version": "0.0.1",
     "scripts": {
-        "start": "node server.js"
+        "start": "node server.js",
+        "release": "git commit -a -m ranrelease && npm version $(semver $npm_package_version -i patch) && npm publish --tag latest"
     },
     "exports": "./index.js",
     "dependencies": {
         "dotenv": "^16.3.1",
         "express": "^4.18.2",
-        "hyper-ipc-secure": "latest"
+        "hypecall": "latest",
+        "hyper-ipc-secure": "latest",
+        "hyperbee": "^2.15.2",
+        "hypercore": "^10.29.0",
+        "hyperswarm": "^4.7.3"
     }
 }
