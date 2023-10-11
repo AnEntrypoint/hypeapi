@@ -1,5 +1,5 @@
 {
-    "name": "hypeendpoint",
+    "name": "hypewebhook",
     "version": "0.0.4",
     "scripts": {
         "start": "node server.js",
