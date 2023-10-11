@@ -4,7 +4,7 @@ const express = require('express')
  * @param {Object} node - The node object.
  * @returns {Object} - The router object.
  */
-const init = (node) => {
+const init = (node, db) => {
   /**
    * Handles the save task request.
    * @param {Object} req - The request object.
@@ -12,7 +12,7 @@ const init = (node) => {
    */
   const saveTask = async (req, res) => {
     console.log(req);
-    fs.writeFileSync(`saves/${req.params.name}.json`, JSON.stringify(req.body));
+    db.put(req.params.name, JSON.stringify(req.body));
     res.write("{success:true}");
     res.status(200).end();
   };
@@ -25,8 +25,7 @@ const init = (node) => {
   const loadTask = async (req, res) => {
     console.log("loading task");
     try {
-      const name = `saves/${req.params.name}.json`;
-      res.write(fs.readFileSync(name));
+      res.write(db.get(req.params.name));
       res.status(200).end();
     } catch (e) {
       console.error(e);
