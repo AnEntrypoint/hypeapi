@@ -12,7 +12,7 @@ const init = (node, db) => {
    */
   const saveTask = async (req, res) => {
     console.log(req);
-    db.put(req.params.name, JSON.stringify(req.body));
+    db.put(req.params.name, JSON.stringify(req.body));d
     res.write("{success:true}");
     res.status(200).end();
   };
